@@ -20,28 +20,32 @@
 
           <h:form>
             <h1><h:outputText value="Liste des comptes bancaires"/></h1>
-            <p:dataTable value="#{gestionComptesBean.allComptes}" var="item">
-              <p:column>
+            <p:dataTable value="#{gestionComptesBean.allComptes}" var="item"
+                         tableStyle="width: auto;" >
+              <f:facet name="header">Liste de tous les comptes</f:facet>
+              <p:column width="40"  style="border-width: 1px;">
                 <f:facet name="header">
                   <h:outputText value="Id"/>
                 </f:facet>
                 <h:outputText value="#{item.id}"/>
               </p:column>
-              <p:column>
+              <p:column width="300">
                 <f:facet name="header">
                   <h:outputText value="Nom"/>
                 </f:facet>
                 <h:outputText value="#{item.nom}"/>
               </p:column>
-              <p:column>
+              <p:column style="text-align:right;" width="60">
                 <f:facet name="header">
                   <h:outputText value="Solde"/>
                 </f:facet>
-                <h:outputText value="#{item.solde}"/>
+                <h:outputText value="#{item.solde}">
+                  <f:convertNumber pattern="###,###,##0"/>
+                </h:outputText>
               </p:column>
             </p:dataTable>
           </h:form>
-          
+
           <h:messages/>
         </f:view>
 
