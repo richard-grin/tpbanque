@@ -21,26 +21,38 @@
           <h:form>
             <h1><h:outputText value="Liste des comptes bancaires"/></h1>
             <p:dataTable value="#{gestionComptesBean.allComptes}" var="item"
-                         tableStyle="width: auto;" >
+                         tableStyle="width: auto;" paginator="true" rows="4"
+                         rowsPerPageTemplate="2,4,8,10"
+                         paginatorTemplate="{CurrentPageReport}  
+                         {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         >
               <f:facet name="header">Liste de tous les comptes</f:facet>
-              <p:column width="40"  style="border-width: 1px;">
+              <p:column width="40"  style="border-width: 1px;"
+                        sortBy="#{item.id}">
                 <f:facet name="header">
                   <h:outputText value="Id"/>
                 </f:facet>
                 <h:outputText value="#{item.id}"/>
               </p:column>
-              <p:column width="300">
+              <p:column width="300" sortBy="#{item.nom}"
+                        filterBy="#{item.nom}">
                 <f:facet name="header">
                   <h:outputText value="Nom"/>
                 </f:facet>
                 <h:outputText value="#{item.nom}"/>
               </p:column>
-              <p:column style="text-align:right;" width="60">
+              <p:column style="text-align:right;" width="60"
+                        sortBy="#{item.solde}"
+                        filterBy="#{item.solde}"
+                        filterFunction="#{gestionComptesBean.filterBySolde}">
                 <f:facet name="header">
                   <h:outputText value="Solde"/>
                 </f:facet>
                 <h:outputText value="#{item.solde}">
+                  <ui:remove>
                   <f:convertNumber pattern="###,###,##0"/>
+                  </ui:remove>
+                  <f:converter converterId="javax.faces.Integer"/>
                 </h:outputText>
               </p:column>
             </p:dataTable>
