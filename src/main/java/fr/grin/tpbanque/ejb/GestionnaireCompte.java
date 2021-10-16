@@ -20,7 +20,11 @@ import javax.persistence.TypedQuery;
         portNumber = 3306,
         user = "root", // nom et
         password = "ric088", // mot de passe que vous avez donnés lors de la création de la base de données
-        databaseName = "banque"
+        databaseName = "banque",
+        properties = {
+         // "zeroDateTimeBehavior=CONVERT_TO_NULL",
+          "useSSL=false"
+        }
 )
 @Stateless
 public class GestionnaireCompte {
@@ -35,5 +39,10 @@ public class GestionnaireCompte {
   public List<CompteBancaire> getAllCustomers() {
     TypedQuery query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
     return query.getResultList();
+  }
+
+  public long nbComptes() {
+    TypedQuery<Long> query = em.createQuery("select count(c) from CompteBancaire c", Long.class);
+    return query.getSingleResult();
   }
 }
