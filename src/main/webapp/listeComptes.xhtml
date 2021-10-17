@@ -44,10 +44,7 @@
                   <h:outputText value="Solde"/>
                 </f:facet>
                 <h:outputText value="#{item.solde}">
-                  <ui:remove>
                   <f:convertNumber pattern="###,###,##0"/>
-                  </ui:remove>
-                  <f:converter converterId="javax.faces.Integer"/>
                 </h:outputText>
               </p:column>
             </p:dataTable>
