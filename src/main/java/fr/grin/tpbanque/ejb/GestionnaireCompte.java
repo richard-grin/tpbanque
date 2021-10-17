@@ -22,7 +22,7 @@ import javax.persistence.TypedQuery;
         password = "ric088", // mot de passe que vous avez donnés lors de la création de la base de données
         databaseName = "banque",
         properties = {
-         // "zeroDateTimeBehavior=CONVERT_TO_NULL",
+          // "zeroDateTimeBehavior=CONVERT_TO_NULL",
           "useSSL=false"
         }
 )
@@ -36,7 +36,7 @@ public class GestionnaireCompte {
     em.persist(compte);
   }
 
-  public List<CompteBancaire> getAllCustomers() {
+  public List<CompteBancaire> getAllComptes() {
     TypedQuery query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
     return query.getResultList();
   }
@@ -44,5 +44,17 @@ public class GestionnaireCompte {
   public long nbComptes() {
     TypedQuery<Long> query = em.createQuery("select count(c) from CompteBancaire c", Long.class);
     return query.getSingleResult();
+  }
+
+  public void transferer(CompteBancaire source, CompteBancaire destination,
+          int montant) {
+    source.retirer(montant);
+    destination.deposer(montant);
+    update(source);
+    update(destination);
+  }
+
+  public CompteBancaire update(CompteBancaire compteBancaire) {
+    return em.merge(compteBancaire);
   }
 }
