@@ -20,7 +20,6 @@ public class Init {
 
   @PostConstruct
   public void initComptes() {
-    gestionnaireCompte.creerCompte(new CompteBancaire("Bill", 500));
     if (gestionnaireCompte.nbComptes() != 0) {
       return;
     }

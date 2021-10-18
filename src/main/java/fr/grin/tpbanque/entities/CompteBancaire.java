@@ -62,6 +62,18 @@ public class CompteBancaire implements Serializable {
     this.solde = solde;
   }
 
+  public void deposer(int montant) {
+    solde += montant;
+  }
+
+  public void retirer(int montant) {
+    if (montant < solde) {
+      solde -= montant;
+    } else {
+      solde = 0;
+    }
+  }
+
   @Override
   public int hashCode() {
     int hash = 0;
@@ -70,7 +82,8 @@ public class CompteBancaire implements Serializable {
   }
 
   @Override
-  public boolean equals(Object object) {
+  public boolean equals(Object object
+  ) {
     // TODO: Warning - this method won't work in the case the id fields are not set
     if (!(object instanceof CompteBancaire)) {
       return false;
