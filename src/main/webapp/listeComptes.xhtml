@@ -15,7 +15,7 @@
         <f:view>
           <h:form>
             <h1><h:outputText value="Liste des comptes bancaires"/></h1>
-            <p:dataTable value="#{gestionComptesBean.allComptes}" var="item"
+            <p:dataTable value="#{listeComptes.allComptes}" var="item"
                          tableStyle="width: auto;" paginator="true" rows="4"
                          rowsPerPageTemplate="2,4,8,10"
                          paginatorTemplate="{CurrentPageReport}  
@@ -39,7 +39,7 @@
               <p:column style="text-align:right;" width="60"
                         sortBy="#{item.solde}"
                         filterBy="#{item.solde}"
-                        filterFunction="#{gestionComptesBean.filterBySolde}">
+                        filterFunction="#{listeComptes.filterBySolde}">
                 <f:facet name="header">
                   <h:outputText value="Solde"/>
                 </f:facet>

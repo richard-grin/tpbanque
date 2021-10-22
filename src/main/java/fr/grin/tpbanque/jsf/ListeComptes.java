@@ -13,9 +13,9 @@ import javax.ejb.EJB;
  * Backing bean pour la page qui liste tous les comptes.
  * @author grin
  */
-@Named(value = "gestionComptesBean")
+@Named
 @ViewScoped
-public class GestionComptesBean implements Serializable {
+public class ListeComptes implements Serializable {
 
   @EJB
   private GestionnaireCompte gestionnaireCompte;
@@ -23,7 +23,7 @@ public class GestionComptesBean implements Serializable {
   /**
    * Creates a new instance of GestionComptesBean
    */
-  public GestionComptesBean() {
+  public ListeComptes() {
   }
   
   public List<CompteBancaire> getAllComptes() {
