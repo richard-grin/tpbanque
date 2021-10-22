@@ -49,7 +49,7 @@ public class Transfert {
   public String enregistrer() {
     boolean erreur = false;
     
-    CompteBancaire source = gestionnaireCompte.findCompte(idSource);
+    CompteBancaire source = gestionnaireCompte.findById(idSource);
     if (source == null) {
       // Message d'erreur associé au composant source ; form:source est l'id client
       // si l'id du formulaire est "form" et l'id du champ de saisie de l'id de la source est "source"
@@ -63,7 +63,7 @@ public class Transfert {
       }
     }
 
-    CompteBancaire destination = gestionnaireCompte.findCompte(idDestination);
+    CompteBancaire destination = gestionnaireCompte.findById(idDestination);
     if (destination == null) {
       // Message d'erreur associé au composant source ; form:source est l'id client
       // si l'id du formulaire est "form" et l'id du champ de saisie de l'id de la source est "source"

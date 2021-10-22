@@ -27,7 +27,7 @@
                 <f:facet name="header">
                   <h:outputText value="Id"/>
                 </f:facet>
-                <h:outputText value="#{item.id}"/>
+                <h:link value="#{item.id}" outcome="mouvement?id=#{item.id}"/>
               </p:column>
               <p:column width="300" sortBy="#{item.nom}"
                         filterBy="#{item.nom}">
