@@ -52,4 +52,10 @@ public class ListeComptes implements Serializable {
     }
   }
   
+  public String supprimerCompte(CompteBancaire compte) {
+    gestionnaireCompte.supprimer(compte);
+    // Reste sur la même page
+    return null;
+  }
+  
 }

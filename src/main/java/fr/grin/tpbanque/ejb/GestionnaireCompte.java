@@ -60,6 +60,10 @@ public class GestionnaireCompte {
     return em.merge(compteBancaire);
   }
   
+  public void supprimer(CompteBancaire compte) {
+    em.remove(em.merge(compte));
+  }
+  
   public CompteBancaire findById(long id) {
     return em.find(CompteBancaire.class, id);
   }
