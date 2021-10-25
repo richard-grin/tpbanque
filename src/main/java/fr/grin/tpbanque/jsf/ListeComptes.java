@@ -59,6 +59,7 @@ public class ListeComptes implements Serializable {
   
   public String supprimerCompte(CompteBancaire compte) {
     gestionnaireCompte.supprimer(compte);
+    Util.addFlashInfoMessage("Compte de " + compte.getNom() + " supprimé");
     // Redirection pour faire afficher la nouvelle liste, sans le compte
     // supprimé
     return "listeComptes?faces-redirect=true";
