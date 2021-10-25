@@ -19,6 +19,8 @@ public class ListeComptes implements Serializable {
 
   @EJB
   private GestionnaireCompte gestionnaireCompte;
+  
+  private List<CompteBancaire> listeComptes;
 
   /**
    * Creates a new instance of GestionComptesBean
@@ -27,7 +29,10 @@ public class ListeComptes implements Serializable {
   }
   
   public List<CompteBancaire> getAllComptes() {
-    return gestionnaireCompte.getAllComptes();
+    if (listeComptes == null) {
+      listeComptes = gestionnaireCompte.getAllComptes();
+    }
+    return listeComptes;
   }
   
    /**
