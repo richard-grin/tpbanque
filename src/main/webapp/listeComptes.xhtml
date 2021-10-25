@@ -51,6 +51,10 @@
                                action="#{listeComptes.supprimerCompte(item)}">
                   <h:graphicImage name="images/del.png" />
                 </h:commandLink>
+                <br/>
+                <h:link title="Modifier le nom #{item.nom}"
+                        value="Modifier le nom"
+                        outcome="modifierNom?id=#{item.id}"  />
               </p:column>
             </p:dataTable>
           </h:form>

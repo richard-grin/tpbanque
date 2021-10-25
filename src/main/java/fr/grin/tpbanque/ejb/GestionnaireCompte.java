@@ -23,7 +23,8 @@ import javax.persistence.TypedQuery;
         databaseName = "banque",
         properties = {
           // "zeroDateTimeBehavior=CONVERT_TO_NULL",
-          "useSSL=false"
+          "useSSL=false",
+          "allowPublicKeyRetrieval=true"
         }
 )
 @Stateless
