@@ -16,11 +16,9 @@
           <h:form>
             <p:dataTable value="#{listeComptes.allComptes}" var="item"
                          tableStyle="width: auto;" paginator="true" rows="4"
-                         rowsPerPageTemplate="2,4,8,10"
-                         paginatorTemplate="{CurrentPageReport}  
-                         {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="2,4,8,10" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          >
-              <ui:remove><f:facet name="header">Liste de tous les comptes</f:facet></ui:remove>
               <p:column width="40"  style="border-width: 1px;"
                         sortBy="#{item.id}">
                 <f:facet name="header">
@@ -47,16 +45,26 @@
                 </h:outputText>
               </p:column>
               <p:column>
-                <h:commandLink title="Supprimer le compte de #{item.nom}"
-                               action="#{listeComptes.supprimerCompte(item)}">
+                <p:commandLink action="#{listeComptes.supprimerCompte(item)}" 
+                               title="Supprimer ce compte">
                   <h:graphicImage name="images/del.png" />
-                </h:commandLink>
+                  <p:confirm header="Confirmation de suppression"
+                             message="Voulez-vous vraiment supprimer ?" />
+                </p:commandLink>
                 <br/>
                 <h:link title="Modifier le nom #{item.nom}"
                         value="Modifier le nom"
                         outcome="modifierNom?id=#{item.id}"  />
               </p:column>
             </p:dataTable>
+
+            <p:confirmDialog global="true">
+              <p:commandButton value="Oui" type="button" 
+                               styleClass="ui-confirmdialog-yes"/>
+              <p:commandButton value="Non" type="button" 
+                               styleClass="ui-confirmdialog-no"/>
+            </p:confirmDialog>
+
           </h:form>
 
           <h:messages/>
