@@ -6,6 +6,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -89,7 +90,12 @@ public class Mouvement implements Serializable {
     if (typeMouvement.equals("ajout")) {
       gestionnaireCompte.deposer(compte, montant);
     } else {
+      try {
       gestionnaireCompte.retirer(compte, montant);
+      } catch(EJBTransactionRolledbackException ex) {
+        Util.messageErreur(ex.getMessage(), ex.getMessage(), "form:montant");
+        return null; // rester sur la même page
+      }
     }
     Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
     return "listeComptes?faces-redirect=true";

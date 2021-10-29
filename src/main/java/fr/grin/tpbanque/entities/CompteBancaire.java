@@ -1,5 +1,6 @@
 package fr.grin.tpbanque.entities;
 
+import fr.grin.tpbanque.ejb.CompteException;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,11 +67,12 @@ public class CompteBancaire implements Serializable {
     solde += montant;
   }
 
-  public void retirer(int montant) {
+  public void retirer(int montant) throws CompteException {
     if (montant < solde) {
       solde -= montant;
     } else {
-      solde = 0;
+      throw new CompteException("Solde du compte de " + this.nom 
+              + " insuffisant pour un retrait de " + montant);
     }
   }
 

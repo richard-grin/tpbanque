@@ -3,6 +3,7 @@ package fr.grin.tpbanque.jsf;
 import fr.grin.tpbanque.ejb.GestionnaireCompte;
 import fr.grin.tpbanque.entities.CompteBancaire;
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
@@ -48,7 +49,7 @@ public class Transfert {
 
   public String enregistrer() {
     boolean erreur = false;
-    
+
     CompteBancaire source = gestionnaireCompte.findById(idSource);
     if (source == null) {
       // Message d'erreur associé au composant source ; form:source est l'id client
@@ -57,10 +58,11 @@ public class Transfert {
       Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
       erreur = true;
     } else {
-      if (source.getSolde() < montant) {
-        Util.messageErreur("Solde de " + source.getNom() + " insuffisant", "Solde insuffisant", "form:montant");
-        erreur = true;
-      }
+      // La suite est commentée pour tester l'utilisation de CompteException.
+//      if (source.getSolde() < montant) {
+//        Util.messageErreur("Solde de " + source.getNom() + " insuffisant", "Solde insuffisant", "form:montant");
+//        erreur = true;
+//      }
     }
 
     CompteBancaire destination = gestionnaireCompte.findById(idDestination);
@@ -71,16 +73,21 @@ public class Transfert {
       Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
       erreur = true;
     }
-    
+
     if (erreur) {
       return null;
     }
-    
+
     // Pas d'erreur de saisie
-    gestionnaireCompte.transferer(source, destination, montant);
-    Util.addFlashInfoMessage("Transfert de " + source.getNom() + " vers " 
-            + destination.getNom() 
-            + " pour un montant de " + montant + " correctement effectué");
-    return "listeComptes?faces-redirect=true";
+    try {
+      gestionnaireCompte.transferer(source, destination, montant);
+      Util.addFlashInfoMessage("Transfert de " + source.getNom() + " vers "
+              + destination.getNom()
+              + " pour un montant de " + montant + " correctement effectué");
+      return "listeComptes?faces-redirect=true";
+    } catch (EJBTransactionRolledbackException ex) {
+      Util.messageErreur(ex.getMessage(), ex.getMessage(), "form:montant");
+      return null; // rester sur la même page
+    }
   }
 }

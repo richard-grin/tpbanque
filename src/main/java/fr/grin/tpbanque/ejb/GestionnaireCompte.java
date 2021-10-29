@@ -5,8 +5,11 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.sql.DataSourceDefinition;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -63,10 +66,14 @@ public class GestionnaireCompte {
 
   public void transferer(CompteBancaire source, CompteBancaire destination,
           int montant) {
-    source.retirer(montant);
-    destination.deposer(montant);
-    update(source);
-    update(destination);
+    try {
+      source.retirer(montant);
+      destination.deposer(montant);
+      update(source);
+      update(destination);
+    } catch (CompteException ex) {
+      throw new EJBTransactionRolledbackException(ex.getLocalizedMessage(), ex);
+    }
   }
 
   public CompteBancaire update(CompteBancaire compteBancaire) {
@@ -99,8 +106,12 @@ public class GestionnaireCompte {
    * @param montant
    */
   public void retirer(CompteBancaire compteBancaire, int montant) {
-    compteBancaire.retirer(montant);
-    update(compteBancaire);
+    try {
+      compteBancaire.retirer(montant);
+      update(compteBancaire);
+    } catch (CompteException ex) {
+      throw new EJBTransactionRolledbackException(ex.getLocalizedMessage(), ex);
+    }
   }
 
   // Le reste des méthodes pour le lazy loading
