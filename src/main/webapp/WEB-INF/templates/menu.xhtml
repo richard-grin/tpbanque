@@ -3,8 +3,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:jsf="http://xmlns.jcp.org/jsf">
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:p="http://primefaces.org/ui">
   <ul>
+    <li><h:link outcome="/index" value="Accueil" /></li>
     <li><h:link outcome="/listeComptes" value="Liste de tous les comptes" /></li>
     <li><h:link outcome="/listeComptesLazy" value="Liste de tous les comptes, avec lazy loading" /></li>
     <li><h:link outcome="/transfert" value="Tranfert d'argent entre 2 comptes"/></li>
@@ -15,4 +17,30 @@
     </li>
     <li><h:link outcome="/ajoutCompte" value="Ajouter un nouveau compte"/></li>
   </ul>
+  <h2>Menus PrimeFaces</h2>
+  <h:form>
+    <p:panelMenu style="width:150px;">
+      <p:submenu label="Acceuil" expanded="true">
+        <p:menuitem outcome="/index" value="Accueil"/>
+      </p:submenu>
+      
+      <p:submenu label="Liste des comptes">
+        <p:menuitem outcome="/listeComptes" value="simple"/>
+        <p:menuitem 
+          outcome="/listeComptesLazy" 
+          value="avec lazy loading"/>
+      </p:submenu>
+      <p:submenu label="Transfert entre comptes">
+        <p:menuitem outcome="/transfert" 
+                    value="avec id"/>
+        <p:menuitem outcome="/transfertAjax" 
+                    value="avec Ajax"/>
+        <p:menuitem disabled="#{facesContext.application.flowHandler.currentFlow.id != null}"
+                    outcome="flotTransfert" 
+                    value="avec flot"/>
+      </p:submenu>
+      <p:menuitem outcome="/ajoutCompte.xhtml" value="Créer un compte"/>
+    </p:panelMenu>
+  </h:form>
+  
 </ui:composition>
