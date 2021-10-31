@@ -68,11 +68,12 @@ public class CompteBancaire implements Serializable {
   }
 
   public void retirer(int montant) throws CompteException {
-    if (montant < solde) {
+    if (montant <= solde) {
       solde -= montant;
     } else {
       throw new CompteException("Solde du compte de " + this.nom 
-              + " insuffisant pour un retrait de " + montant);
+              + " est " + solde
+              + " ; insuffisant pour un retrait de " + montant);
     }
   }
 
