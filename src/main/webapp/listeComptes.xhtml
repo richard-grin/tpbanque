@@ -57,7 +57,16 @@
                 <br/>
                 <h:link title="Modifier le nom #{item.nom}"
                         value="Modifier le nom"
-                        outcome="modifierNom?id=#{item.id}"  />
+                        outcome="/modifierNom?id=#{item.id}"  />
+              </p:column>
+              <p:column>
+                <f:facet name="header">
+                  <h:outputText escape="false" value="Historique&lt;br/>opérations"/>
+                </f:facet>
+                <h:link 
+                  title="Afficher les opérations sur le compte de #{item.nom}"
+                  value="Détails"
+                  outcome="/operations?id=#{item.id}" />
               </p:column>
               
             </p:dataTable>
