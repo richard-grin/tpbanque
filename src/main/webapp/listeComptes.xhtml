@@ -35,7 +35,7 @@
                 </f:facet>
                 <h:outputText value="#{item.nom}"/>
               </p:column>
-              <p:column style="text-align:right;" width="60"
+              <p:column style="text-align:right;" width="70"
                         sortBy="#{item.solde}"
                         filterBy="#{item.solde}"
                         filterFunction="#{listeComptes.filterBySolde}">
@@ -47,6 +47,9 @@
                 </h:outputText>
               </p:column>
               <p:column>
+                <f:facet name="header">
+                  <h:outputText value="Opérations"/>
+                </f:facet>
                 <h:commandLink title="Supprimer le compte de #{item.nom}"
                                action="#{listeComptes.supprimerCompte(item)}">
                   <h:graphicImage name="images/del.png" />
@@ -56,6 +59,7 @@
                         value="Modifier le nom"
                         outcome="modifierNom?id=#{item.id}"  />
               </p:column>
+              
             </p:dataTable>
           </h:form>
 
