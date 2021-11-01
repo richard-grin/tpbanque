@@ -38,15 +38,21 @@
               </p:column>
               <p:column>
                 <f:facet name="header">
-                  <h:outputText value="DateOperation"/>
+                  <h:outputText value="Date Opération"/>
                 </f:facet>
-                <h:outputText value="#{item.dateOperation}"/>
+                <h:outputText value="#{item.dateOperation}">
+                  <f:convertDateTime
+                    type="localDateTime"
+                    pattern="dd/MM/yyyy HH:mm:ss" />
+                </h:outputText>
               </p:column>
-              <p:column>
+              <p:column style="text-align:right;">
                 <f:facet name="header">
                   <h:outputText value="Montant"/>
                 </f:facet>
-                <h:outputText value="#{item.montant}"/>
+                <h:outputText value="#{item.montant}">
+                  <f:convertNumber pattern="###,###,##0"/>
+                </h:outputText>
               </p:column>
             </p:dataTable>
           </h:form>
