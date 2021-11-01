@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 /**
  * Un compte bancaire.
@@ -28,6 +29,8 @@ public class CompteBancaire implements Serializable {
 
   private String nom;
   private int solde;
+  @Version
+  private int version;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<OperationBancaire> operations = new ArrayList<>();
