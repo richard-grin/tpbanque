@@ -2,11 +2,17 @@ package fr.grin.tpbanque.entities;
 
 import fr.grin.tpbanque.ejb.CompteException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 /**
  * Un compte bancaire.
@@ -24,10 +30,17 @@ public class CompteBancaire implements Serializable {
 
   private String nom;
   private int solde;
+  @Version
+  private int version;
 
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<OperationBancaire> operations = new ArrayList<>();
+  
+  
   public CompteBancaire(String nom, int solde) {
     this.nom = nom;
     this.solde = solde;
+    operations.add(new OperationBancaire("Création du compte", solde));
   }
 
   public CompteBancaire() {
@@ -37,20 +50,10 @@ public class CompteBancaire implements Serializable {
     return id;
   }
 
-  /**
-   * Get the value of nom
-   *
-   * @return the value of nom
-   */
   public String getNom() {
     return nom;
   }
 
-  /**
-   * Set the value of nom
-   *
-   * @param nom new value of nom
-   */
   public void setNom(String nom) {
     this.nom = nom;
   }
@@ -62,9 +65,14 @@ public class CompteBancaire implements Serializable {
   public void setSolde(int solde) {
     this.solde = solde;
   }
+  
+  public List<OperationBancaire> getOperations() {
+    return operations;
+  }
 
   public void deposer(int montant) {
     solde += montant;
+    operations.add(new OperationBancaire("Crédit", montant));
   }
 
   public void retirer(int montant) throws CompteException {
@@ -75,6 +83,7 @@ public class CompteBancaire implements Serializable {
               + " est " + solde
               + " ; insuffisant pour un retrait de " + montant);
     }
+    operations.add(new OperationBancaire("Débit", montant));
   }
 
   @Override

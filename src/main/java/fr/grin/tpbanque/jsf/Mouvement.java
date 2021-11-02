@@ -6,15 +6,18 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.persistence.OptimisticLockException;
 
 /**
  * Backing bean pour la page mouvement.xhtml.
+ *
  * @author grin
  */
 @Named(value = "mouvement")
@@ -87,18 +90,35 @@ public class Mouvement implements Serializable {
   }
 
   public String enregistrerMouvement() {
-    if (typeMouvement.equals("ajout")) {
-      gestionnaireCompte.deposer(compte, montant);
-    } else {
-      try {
-      gestionnaireCompte.retirer(compte, montant);
-      } catch(EJBTransactionRolledbackException ex) {
-        Util.messageErreur(ex.getMessage(), ex.getMessage(), "form:montant");
-        return null; // rester sur la même page
+    try {
+      if (typeMouvement.equals("ajout")) {
+        gestionnaireCompte.deposer(compte, montant);
+      } else {
+        try {
+          gestionnaireCompte.retirer(compte, montant);
+        } catch (EJBTransactionRolledbackException ex) {
+          // Cas d'un solde insuffisant dans compte
+          Util.messageErreur(ex.getMessage(), ex.getMessage(), "form:montant");
+          return null; // rester sur la même page
+        }
       }
+      // Le mouvement a bien été enregistré
+      Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
+      return "listeComptes?faces-redirect=true";
+    } catch (EJBException ex) {
+      // La stratégie optimiste a échoué ; conflit avec un autre utilisateur
+      Throwable cause = ex.getCause();
+      if (cause != null) {
+        if (cause instanceof OptimisticLockException) {
+          Util.messageErreur("Le compte de " + compte.getNom()
+                  + " a été modifié ou supprimé par un autre utilisateur !");
+        } else { // ou bien afficher le message de ex...
+          Util.messageErreur(cause.getMessage());
+        }
+      }
+      return null; // rester sur la même page
     }
-    Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
-    return "listeComptes?faces-redirect=true";
+
   }
 
 }
