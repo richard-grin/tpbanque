@@ -35,7 +35,7 @@
             <h:inputText id="montant" size="3" value="#{transfertAjax.montant}"
                          required="true"
                          converterMessage="L'id est un nombre entier" />
-            <h:message for="montant"/>
+            <h:message for="montant" errorStyle="color: red"/>
             <!-- Juste pour l'alignement ; <br/> aurait aussi convenu -->
 
             <h:commandButton id="enregistrement" value="Enregistrer"
