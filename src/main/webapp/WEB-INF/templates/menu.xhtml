@@ -23,7 +23,7 @@
       <p:submenu label="Acceuil" expanded="true">
         <p:menuitem outcome="/index" value="Accueil"/>
       </p:submenu>
-      
+
       <p:submenu label="Liste des comptes">
         <p:menuitem outcome="/listeComptes" value="simple"/>
         <p:menuitem 
@@ -39,8 +39,10 @@
                     outcome="flotTransfert" 
                     value="avec flot"/>
       </p:submenu>
-      <p:menuitem outcome="/ajoutCompte.xhtml" value="Créer un compte"/>
+      <p:submenu label="Ajout de nouveaux comptes" expanded="true">
+        <p:menuitem outcome="/ajoutCompte.xhtml" value="Créer un compte"/>
+      </p:submenu>
     </p:panelMenu>
   </h:form>
-  
+
 </ui:composition>
