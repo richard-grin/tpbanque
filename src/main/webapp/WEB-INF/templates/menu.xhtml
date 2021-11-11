@@ -5,19 +5,22 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 xmlns:p="http://primefaces.org/ui">
-  <ul>
-    <li><h:link outcome="/index" value="Accueil" /></li>
-    <li><h:link outcome="/listeComptes" value="Liste de tous les comptes" /></li>
-    <li><h:link outcome="/listeComptesLazy" value="Liste de tous les comptes, avec lazy loading" /></li>
-    <li><h:link outcome="/transfert" value="Tranfert d'argent entre 2 comptes"/></li>
-    <li><h:link outcome="/transfertAjax" value="Tranfert d'argent entre 2 comptes, avec Ajax"/></li>
-    <li>
-      <h:link disabled="#{facesContext.application.flowHandler.currentFlow.id != null}"
-              outcome="flotTransfert" value="Tranfert d'argent entre 2 comptes, avec Flow"/>
-    </li>
-    <li><h:link outcome="/ajoutCompte" value="Ajouter un nouveau compte"/></li>
-  </ul>
-  <h2>Menus PrimeFaces</h2>
+  <ui:remove>
+    <ul>
+      <li><h:link outcome="/index" value="Accueil" /></li>
+      <li><h:link outcome="/listeComptes" value="Liste de tous les comptes" /></li>
+      <li><h:link outcome="/listeComptesLazy" value="Liste de tous les comptes, avec lazy loading" /></li>
+      <li><h:link outcome="/transfert" value="Tranfert d'argent entre 2 comptes"/></li>
+      <li><h:link outcome="/transfertAjax" value="Tranfert d'argent entre 2 comptes, avec Ajax"/></li>
+      <li>
+        <h:link disabled="#{facesContext.application.flowHandler.currentFlow.id != null}"
+                outcome="flotTransfert" value="Tranfert d'argent entre 2 comptes, avec Flow"/>
+      </li>
+      <li><h:link outcome="/ajoutCompte" value="Ajouter un nouveau compte"/></li>
+    </ul>
+    <h2>Menu PrimeFaces</h2>
+  </ui:remove>
+  
   <h:form>
     <p:panelMenu style="width:150px;">
       <p:submenu label="Acceuil" expanded="true">
