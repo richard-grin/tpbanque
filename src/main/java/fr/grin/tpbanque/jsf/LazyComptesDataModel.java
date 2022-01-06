@@ -29,4 +29,9 @@ public class LazyComptesDataModel extends LazyDataModel<CompteBancaire> {
     return comptes;
   }
 
+  @Override
+  public int count(Map<String, FilterMeta> filters) {
+    return gestionnaireCompte.count(filters);
+  }
+
 }
