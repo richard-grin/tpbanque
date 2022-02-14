@@ -36,7 +36,8 @@
               <p:column style="text-align:right;" width="70"
                         sortBy="#{item.solde}"
                         filterBy="#{item.solde}"
-                        filterFunction="#{listeComptes.filterBySolde}">
+                        filterMatchMode="gt"
+              >
                 <f:facet name="header">
                   <h:outputText value="Solde"/>
                 </f:facet>
